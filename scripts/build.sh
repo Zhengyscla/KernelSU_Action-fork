@@ -92,15 +92,22 @@ prepare_defconfig() {
 # ----------------------------------------------------------------- build ---
 
 make_args() {
-	printf '%s' "O=out ARCH=${ARCH}"
-	[ -n "${CUSTOM_CMDS:-}" ] && printf ' %s' "$CUSTOM_CMDS"
-	[ -n "${EXTRA_CMDS:-}"  ] && printf ' %s' "$EXTRA_CMDS"
-	[ -n "${GCC_64:-}"      ] && printf ' %s' "$GCC_64"
-	[ -n "${GCC_32:-}"      ] && printf ' %s' "$GCC_32"
-	if is_true "${USE_LLVM:-false}"; then
-		printf ' LLVM=1 LLVM_IAS=1'
-		[ -n "${GCC_64:-}" ] || printf ' CROSS_COMPILE=aarch64-linux-gnu-'
-	fi
+    printf '%s' "O=out ARCH=${ARCH}"
+    [ -n "${CUSTOM_CMDS:-}" ] && printf ' %s' "$CUSTOM_CMDS"
+    [ -n "${EXTRA_CMDS:-}"  ] && printf ' %s' "$EXTRA_CMDS"
+    [ -n "${GCC_64:-}"      ] && printf ' %s' "$GCC_64"
+    [ -n "${GCC_32:-}"      ] && printf ' %s' "$GCC_32"
+
+    if is_true "${USE_LLVM:-false}"; then
+        printf ' LLVM=1 LLVM_IAS=1'
+        [ -n "${GCC_64:-}" ] || printf ' CROSS_COMPILE=aarch64-linux-gnu-'
+    fi
+
+    # Android Clang toolchains need an explicit target triple on
+    # legacy Android kernels such as Linux 4.14.
+    if [ -n "${CLANG_TRIPLE:-}" ]; then
+        printf ' CLANG_TRIPLE=%s' "$CLANG_TRIPLE"
+    fi
 }
 
 build_kernel() {
@@ -134,7 +141,7 @@ build_kernel() {
 	cd "$KERNEL_DIR"
 	info "make ${args} ${KERNEL_CONFIG}"
 	# shellcheck disable=SC2086
-	make -j"$(nproc --all)" CC=clang $args "${KERNEL_CONFIG}" \
+	make -j"$(nproc --all)" CC="$cc" $args "${KERNEL_CONFIG}" \
 		|| die "defconfig generation failed"
 
 	info "make ${args}"
