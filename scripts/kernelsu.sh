@@ -44,6 +44,7 @@ ksu_registry() {
 		echo "https://github.com/SukiSU-Ultra/SukiSU-Ultra|main|KernelSU|main|builtin|builtin|SukiSU-Ultra" ;;
 	resukisu)
 		# Re-fork aimed at legacy/non-GKI kernels.
+		# 2026/10/6 日 由 ReSukiSU 改名成 BakaSU
 		echo "https://github.com/ReSukiSU/ReSukiSU|main|KernelSU|main|main|-|ReSukiSU" ;;
 	rsuntk)
 		# RKSU. Its current setup.sh can fail to checkout a branch such as
