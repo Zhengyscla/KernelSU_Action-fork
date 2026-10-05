@@ -1,4 +1,6 @@
-**中文** | [English](README_EN.md)
+本仓库是https://github.com/xiaoleGun/KernelSU_Action 的 fork，仅为个人编译 OPPO A93s 5G 使用
+
+内核源码引用： [https://github.com/LF-Repo/kernel_oppo_mt6833](https://github.com/LF-Repo/kernel_oppo_mt6833) ,请尊重整理内核源码的大佬
 
 # KernelSU Action
 
@@ -179,3 +181,5 @@ patches/
 - [susfs4ksu](https://gitlab.com/simonpunk/susfs4ksu)
 - [SukiSU_patch](https://github.com/ShirkNeko/SukiSU_patch)
 - [xiaoxindada](https://github.com/xiaoxindada)
+- [xiaoleGun](https://github.com/xiaoleGun)
+- [LF-Repo](https://github.com/LF-Repo/kernel_oppo_mt6833)
